@@ -29,14 +29,16 @@ let liNavs = []
  * 
 */
 
-for(article of articles){
+articles.forEach(article =>{
     //geting the data value of each article from data-nav attribute
     let artName = article.getAttribute('data-nav')
     //geting the id of each article from id attribute
     let idArt = article.getAttribute('id')
     // add them to array to be easy to loop of them and add them direct to the dom
-    liNavs.push(`<a class="menu__link" href="#${idArt}">${artName}</a>`)
-}
+    liNavs.push(`<a class="menu__link">${artName}</a>`)
+})
+
+
 
 /**
  * End Helper Functions
@@ -62,7 +64,7 @@ for(liNav of liNavs){
 let liItems = document.querySelectorAll('.menu__link')
 
 // window EventListener to listen to the dom if window scrolled 
-window.addEventListener('scroll',function(event){
+window.addEventListener('scroll',event =>{
     // loop on articless or sections
     for(article of articles){
         // get the destance between our article and the top of the window
@@ -89,17 +91,20 @@ window.addEventListener('scroll',function(event){
 })
 
 // Scroll to anchor ID using scrollTO event
+
+// that was the required part in the review ////////////////////////////////////////////////////////////////////
+// that was the required part in the review ////////////////////////////////////////////////////////////////////
+
 for(liItem of liItems){
-    liItem.addEventListener('click',function(){
-        let hightItem = liItem.getBoundingClientRect();
-        window.scrollTo({
-            top:hightItem.x,
-            left:hightItem.y,
-            behavior: 'smooth'
-        });
-        console.log(hightItem)
+    liItem.addEventListener('click',(e) =>{
+        articles.forEach(article =>{
+            if (article.getAttribute('data-nav') == e.target.textContent){
+                article.scrollIntoView({behavior: "smooth"});
+            }
+        })
     })
 }
+
 
 /**
  * End Main Functions
